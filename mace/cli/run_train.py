@@ -788,6 +788,8 @@ def run(args) -> None:
         max_num_epochs=args.max_num_epochs,
         logger=logger,
         patience=args.patience,
+        target_rmse_f=args.target_rmse_f,
+        target_rmse_e_per_atom=args.target_rmse_e_per_atom,
         save_all_checkpoints=args.save_all_checkpoints,
         output_args=output_args,
         device=device,

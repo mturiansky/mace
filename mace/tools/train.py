@@ -148,6 +148,8 @@ def train(
     start_epoch: int,
     max_num_epochs: int,
     patience: int,
+    target_rmse_f: float,
+    target_rmse_e_per_atom: float,
     checkpoint_handler: CheckpointHandler,
     logger: MetricsLogger,
     eval_interval: int,
@@ -286,6 +288,18 @@ def train(
             if log_wandb:
                 wandb.log(wandb_log_dict)
             if rank == 0:
+                if eval_metrics["rmse_e_per_atom"] < target_rmse_e_per_atom / 1000:
+                    logging.info(
+                        "Stopping optimization after target RMSE E per atom reached"
+                    )
+                    break
+
+                if eval_metrics["rmse_f"] < target_rmse_f / 1000:
+                    logging.info(
+                        "Stopping optimization after target RMSE forces reached"
+                    )
+                    break
+
                 if valid_loss >= lowest_loss:
                     patience_counter += 1
                     if patience_counter >= patience:

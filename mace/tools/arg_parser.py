@@ -693,6 +693,18 @@ def build_default_arg_parser() -> argparse.ArgumentParser:
         default=2048,
     )
     parser.add_argument(
+        "--target_rmse_f",
+        help="Exit training early if RMSE forces are below the target value (in meV/Å)",
+        type=float,
+        default=-1.0,
+    )
+    parser.add_argument(
+        "--target_rmse_e_per_atom",
+        help="Exit training early if RMSE energy per atom is below the target value (in meV)",
+        type=float,
+        default=-1.0,
+    )
+    parser.add_argument(
         "--foundation_model",
         help="Path to the foundation model for transfer learning",
         type=str,
